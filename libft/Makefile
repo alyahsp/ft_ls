@@ -6,7 +6,7 @@
 #    By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/04 14:17:48 by spalmaro          #+#    #+#              #
-#    Updated: 2017/02/08 20:50:43 by spalmaro         ###   ########.fr        #
+#    Updated: 2017/03/03 18:21:26 by spalmaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ C_FILES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c       \
 		ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_base_size.c ft_strtoupper.c \
 		ft_strtolower.c ft_ulltoa_base.c ft_lltoa_base.c ft_itoa_base.c \
 		ft_strndup.c bitlen.c ft_wcslen.c ft_putnchar.c get_next_line.c \
+		ft_lstaddend.c
 
 C_PRINTF = ft_printf.c ft_is.c format.c ft_add_lmod.c convertdioux.c \
 			convertsp.c convertc.c convertls.c convertlc.c convertp.c\
@@ -42,11 +43,9 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-.PHONY : all clean fclean re
-
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(OBJ_NAME)
 	@$(CC) -c $(CFLAGS) $(C_FILES) $(addprefix $(PRINTF_DIR), $(C_PRINTF)) $(HEADER_FLAG)
 	@ar rc $(NAME) $(OBJ_NAME) $(PRINTF_O)
 	@ranlib $(NAME)
@@ -58,3 +57,5 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+.PHONY : all clean fclean re

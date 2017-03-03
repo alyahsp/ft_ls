@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstaddend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/03 16:34:49 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/03 17:59:53 by spalmaro         ###   ########.fr       */
+/*   Created: 2017/03/03 17:19:46 by spalmaro          #+#    #+#             */
+/*   Updated: 2017/03/03 17:50:53 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *s)
+void	ft_lstaddend(t_list **alst, t_list *new)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if ((*alst)->next != NULL)
+			ft_lstaddend(&(*alst)->next, new);
+	else
+		(*alst)->next = new;
 }

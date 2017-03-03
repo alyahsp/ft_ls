@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_print_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/03 16:34:49 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/03 17:59:53 by spalmaro         ###   ########.fr       */
+/*   Created: 2017/02/11 16:10:51 by spalmaro          #+#    #+#             */
+/*   Updated: 2017/02/11 16:11:26 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *s)
+void        ft_print_tab(int **tab, int y, int x)
 {
-	size_t	i;
+    int i;
+    int j;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+    i = 0;
+    j = 0;
+    while (i < y)
+    {
+        while (j < x)
+        {
+            ft_printf("%d ", tab[i][j]);
+            j++;
+        }
+        j = 0;
+        ft_putstr("\n");
+        i++;
+    }
 }

@@ -54,6 +54,36 @@ stat / lstat (use for ls -l)
      link itself are the file type (S_IFLNK), size, blocks, and link count
      (always 1).
 
+	 struct stat { /* when _DARWIN_FEATURE_64_BIT_INODE is defined */
+         dev_t           st_dev;           /* ID of device containing file */
+         mode_t          st_mode;          /* Mode of file (see below) */
+         nlink_t         st_nlink;         /* Number of hard links */
+         ino_t           st_ino;           /* File serial number */
+         uid_t           st_uid;           /* User ID of the file */
+         gid_t           st_gid;           /* Group ID of the file */
+         dev_t           st_rdev;          /* Device ID */
+         struct timespec st_atimespec;     /* time of last access */
+         struct timespec st_mtimespec;     /* time of last data modification */
+         struct timespec st_ctimespec;     /* time of last status change */
+         struct timespec st_birthtimespec; /* time of file creation(birth) */
+         off_t           st_size;          /* file size, in bytes */
+         blkcnt_t        st_blocks;        /* blocks allocated for file */
+         blksize_t       st_blksize;       /* optimal blocksize for I/O */
+         uint32_t        st_flags;         /* user defined flags for file */
+         uint32_t        st_gen;           /* file generation number */
+         nlink_t  st_nlink;  /* number of hard links to the file */
+         uid_t    st_uid;    /* user-id of owner */
+         gid_t    st_gid;    /* group-id of owner */
+         dev_t    st_rdev;   /* device type, for special file inode */
+         struct timespec st_atimespec;  /* time of last access */
+         struct timespec st_mtimespec;  /* time of last data modification */
+         struct timespec st_ctimespec;  /* time of last file status change */
+         off_t    st_size;   /* file size, in bytes */
+         quad_t   st_blocks; /* blocks allocated for file */
+         u_long   st_blksize;/* optimal file sys I/O ops blocksize */
+         u_long   st_flags;  /* user defined flags for file */
+         u_long   st_gen;    /* file generation number */
+
 getpwuid
 	#include <sys/types.h>
 	#include <pwd.h>
