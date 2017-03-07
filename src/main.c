@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/03 15:16:48 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/07 18:36:31 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,36 @@ void	ft_error(int i, char *str)
 		exit(1);
 	}
 	if (i == 1)
+		ft_printf("ft_ls: %s: Permission denied\n", str);
+	if (i == 2)
 	{
 		exit(1);
 	}
+	exit(1);
 }
 
 int		main(int argc, char **argv)
 {
 	int		i;
 	int 	check;
+	t_list	*lst;
 	t_flags	flags;
 
 	i = 1;
 	check = 0;
+	lst = NULL;
 	flags = (t_flags) {0, 0, 0, 0, 0};
-	if (argc == 1)
+	while (argv[i])
 	{
-
-	}// ft_display();
-	else
-	{
-		while (argv[i])
+		if (argv[i][0] == '-' && check == 0)
+			get_flag(argv[i], &flags);
+		else
 		{
-			if (argv[i][0] == '-' && check == 0)
-				get_flag(argv[i], &flags);
-			else
-			{
-				// start_list(argv[i], &flags);
-				check = 1;
-			}
-			i++;
+			start_list(argv[i], &flags, lst);
+			check = 1;
 		}
+		i++;
 	}
+	// ft_ls(lst, flags);
 	return (0);
 }

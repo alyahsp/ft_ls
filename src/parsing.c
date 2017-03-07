@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/03 21:02:35 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/07 18:59:04 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,49 +33,39 @@ void	get_flag(char *str, t_flags *flags)
 			ft_error(0, &str[i]);
 		i++;
 	}
-	// printf("lflag: %d, Rflag: %d, aflag: %d, rflag: %d, tflag: %d\n", flags->lflag,
-	// flags->Rflag, flags->aflag, flags->rflag, flags->tflag);
 }
 
-void	get_data(char *path, t_data *data)
+void	get_data(char *name, t_data *data)
 {
 	struct stat		stats;
-	struct passwd	*pwd;
-	struct group	*grp;
 
-	if (lstat(path, &stats) == -1)
+	// ft_printf("%d", stat(path, &stats));
+	if (!lstat(path, &stats))
 		ft_error(1, path);
-	if (!(pwd = getpwuid(stats.st_uid)))
-		ft_error(1, path);
-	grp = getgrgid(stats.st_gid);
-
-	ft_printf("path %s\n", path);
+	data->path_name = path;
 }
 
-void	start_list(char *path, t_flags *flags)
+t_list	*start_list(char *path, t_flags *flags, t_list *lst)
 {
 	t_data			data;
 	DIR				*dirp;
 	struct dirent	*file;
-	t_list			*lst;
 	t_list			*tmp;
 
-	data = (t_data) {};
+	data = (t_data) {NULL, 0};
 	if (!(dirp = opendir(path)))
-		ft_error(1, path);
+		get_data(path, &data);
 	while ((file = readdir(dirp)) != NULL)
-	{
-		if ((file->d_name)[0] != '.' || flags->aflag)
+		if ((file->d_name)[0] != '.' || flags->aflag == 1)
 		{
-			get_data(file->d_name, &data);
+			get_data(ft_strdup(file->d_name), &data);
 			if (!(tmp = ft_lstnew(&data, sizeof(t_data))))
-				return ;
+				return (NULL);
 			if (!lst)
 				lst = tmp;
 			else
 				ft_lstaddend(&lst, tmp);
 		}
-	}
-	// ft_printf("dirpname %s", dirp->d_name);
-	// get_data(path, flags);
+	return (lst);
 }
+// ((t_data *)(lst->content))->path_name

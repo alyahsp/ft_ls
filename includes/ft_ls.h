@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/03 18:40:18 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/07 16:30:10 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,11 @@ typedef struct	s_flags
 typedef struct	s_data
 {
 	char		*path_name;
-	char		*u_name;
-	char		*gr_name;
-	off_t		size;
-	mode_t		file_mode;
-	nlink_t		nlink;
+	int			notdir;
 }				t_data;
 
 void			get_flag(char *str, t_flags *flags);
-void			start_list(char *path, t_flags *flags);
+t_list			*start_list(char *path, t_flags *flags, t_list *lst);
 void			ft_error(int i, char *str);
 
 #endif

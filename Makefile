@@ -6,7 +6,7 @@
 #    By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/27 17:27:38 by spalmaro          #+#    #+#              #
-#    Updated: 2017/03/03 18:24:29 by spalmaro         ###   ########.fr        #
+#    Updated: 2017/03/07 15:16:08 by spalmaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBFT = -C libft/
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 .PHONY : all clean fclean re
 
