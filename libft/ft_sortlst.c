@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_tab.c                                     :+:      :+:    :+:   */
+/*   ft_sortlst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/11 16:10:51 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 19:51:33 by spalmaro         ###   ########.fr       */
+/*   Created: 2017/03/11 17:21:29 by spalmaro          #+#    #+#             */
+/*   Updated: 2017/03/11 17:50:53 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_tab(int **tab, int y, int x)
+t_list	*ft_sortlst(t_list *lst, int (*cmp)(void*, void*))
 {
-	int i;
-	int j;
+	t_list	*cur1;
+	t_list	*cur2;
+	t_list	tmp;
 
-	i = 0;
-	j = 0;
-	while (i < y)
+	cur1 = lst;
+	while (cur1)
 	{
-		while (j < x)
+		cur2 = cur1->next;
+		while (cur2)
 		{
-			ft_printf("%d ", tab[i][j]);
-			j++;
+			if (cmp(cur1->content, cur2->content) == 0)
+			{
+				tmp.content = cur2->content;
+				cur2->content = cur1->content;
+				cur1->content = tmp.content;
+			}
+			cur2 = cur2->next;
 		}
-		j = 0;
-		ft_putstr("\n");
-		i++;
+		cur1 = cur1->next;
 	}
+	return (lst);
 }

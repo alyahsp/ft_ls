@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_tab.c                                     :+:      :+:    :+:   */
+/*   ft_lstprint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/11 16:10:51 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 19:51:33 by spalmaro         ###   ########.fr       */
+/*   Created: 2017/03/09 21:05:32 by spalmaro          #+#    #+#             */
+/*   Updated: 2017/03/09 21:20:56 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/ft_ls.h"
 
-void	ft_print_tab(int **tab, int y, int x)
+void	ft_lstprint(t_list *lst)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < y)
+	while (lst)
 	{
-		while (j < x)
-		{
-			ft_printf("%d ", tab[i][j]);
-			j++;
-		}
-		j = 0;
-		ft_putstr("\n");
-		i++;
+		ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
+		lst = lst->next;
 	}
 }
