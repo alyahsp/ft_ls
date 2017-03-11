@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 18:24:00 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/11 20:42:08 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		main(int argc, char **argv)
 		}
 		i++;
 	}
+	(check == 0) ? lst = start_list(".", &flags, lst) : 0;
 	ft_ls(lst, &flags);
 	return (0);
 }
