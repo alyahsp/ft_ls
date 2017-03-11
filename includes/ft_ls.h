@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/07 16:30:10 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/11 19:50:26 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,34 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 # include <grp.h>
+# include <stdio.h>
 # include "../libft/libft.h"
 
-typedef struct	s_flags
+typedef struct		s_flags
 {
-	int			lflag;
-	int			Rflag;
-	int			aflag;
-	int			rflag;
-	int			tflag;
-}				t_flags;
+	int				lflag;
+	int				recflag;
+	int				aflag;
+	int				rflag;
+	int				tflag;
+	int				fflag;
+	int				exist;
+}					t_flags;
 
-typedef struct	s_data
+typedef struct		s_data
 {
-	char		*path_name;
-	int			notdir;
-}				t_data;
+	char			*file_name;
+	char			*path_name;
+	struct s_data	*next;
+	struct s_data	*prev;
+	int				notdir;
+	struct stat		*stats;
+}					t_data;
 
-void			get_flag(char *str, t_flags *flags);
-t_list			*start_list(char *path, t_flags *flags, t_list *lst);
-void			ft_error(int i, char *str);
+void				get_flag(char *str, t_flags *flags);
+t_list				*start_list(char *path, t_flags *flags, t_list *lst);
+t_list				*ft_lstsort(t_list *lst, t_flags *f);
+void				ft_error(int i, char *str);
+void				ft_ls(t_list *lst, t_flags *flags);
 
 #endif

@@ -6,13 +6,13 @@
 #    By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/27 17:27:38 by spalmaro          #+#    #+#              #
-#    Updated: 2017/03/07 15:16:08 by spalmaro         ###   ########.fr        #
+#    Updated: 2017/03/11 19:08:43 by spalmaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 
-C_FILES = main.c parsing.c
+C_FILES = main.c parsing.c ft_ls.c ft_lstsort.c
 
 SRC_PATH = src/
 
