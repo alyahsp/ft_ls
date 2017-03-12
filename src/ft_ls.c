@@ -6,31 +6,26 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 20:49:33 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/12 19:10:23 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-// void	ft_lformat(char *path, t_data *data)
-// {
-// 	struct passwd	*pwd;
-// 	struct group	*grp;
-//
-// 	if (!(pwd = getpwuid(stats.st_uid)))
-// 		ft_error(1, path);
-// 	grp = getgrgid(stats.st_gid);
-//
-// 	ft_printf("path %s\n", path);
-// }
-
-void	print_llst(t_list *lst)
+void	print_llst(t_list *lst, t_flags *f)
 {
-	// ft_printf("total %d\n", ((t_data *)(lst->content))->stats->st_nlink);
+	struct passwd	*pwd;
+	struct group	*grp;
+
+	pwd = getpwuid(((t_data*)lst->content)->stats.st_uid);
+	grp = getgrgid(((t_data*)lst->content)->stats.st_gid);
+	ft_printf("total %d\n", f->blocks);
 	while (lst)
 	{
-		// ft_printf("total %d\n", ((t_data *)(lst->content))->stats->st_nlink);
-		ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
+		ft_printf("%d %s %s %d  %s %s\n", ((t_data*)lst->content)->stats.st_nlink,
+		pwd->pw_name, grp->gr_name, ((t_data*)lst->content)->stats.st_size,
+		ctime(&((t_data*)lst->content)->stats.st_mtimespec.tv_sec), ((t_data *)(lst->content))->file_name);
+		// ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
 		lst = lst->next;
 	}
 }
@@ -50,7 +45,7 @@ void	ft_ls(t_list *lst, t_flags *f)
 	if (!f->lflag && !f->recflag)
 		print_lst(lst);
 	if (f->lflag && !f->recflag)
-		print_llst(lst);
+		print_llst(lst, f);
 	// else
 	// {
 	//

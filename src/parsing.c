@@ -6,18 +6,17 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 20:46:42 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/12 18:08:09 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		get_flag(char *str, t_flags *flags)
+void			get_flag(char *str, t_flags *flags)
 {
 	int			i;
 
 	i = 1;
-	flags->exist = 1;
 	while (str[i])
 	{
 		if (str[i] == 'l')
@@ -41,40 +40,56 @@ void		get_flag(char *str, t_flags *flags)
 	}
 }
 
-static void	get_data(char *name, char *path, t_data *data)
+static t_list	*check_ifdir(char *path, t_flags *f)
+{
+	struct stat		stats;
+
+	if (stat(path, &stats) < 0)
+		return (NULL);
+	if (S_ISDIR(stats.st_mode))
+		ft_error(1, path);
+	else if (!f->lflag)
+		ft_printf("%s\n\n", path);
+	else
+		ft_printf("Not managed yet");
+	return (NULL);
+}
+
+static void		get_data(char *name, char *path, t_data *data, int *blk)
 {
 	struct stat		stats;
 	char			*tmp;
 
+	data->path = path;
 	if (ft_strcmp(".", name) || ft_strcmp("..", name))
 	{
 		tmp = ft_strjoin(path, "/");
 		path = ft_strjoin(tmp, name);
 	}
 	free(tmp);
-	if (stat(path, &stats) < 0)
-	{
-		ft_error(1, path);
+	if (lstat(path, &stats) < 0)
 		return ;
-	}
-	data->stats = &stats;
+	data->stats = stats;
 	data->file_name = name;
+	*blk += stats.st_blocks;
 }
 
-t_list		*start_list(char *path, t_flags *flags, t_list *lst)
+t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 {
 	t_data			data;
 	DIR				*dirp;
 	struct dirent	*file;
 	t_list			*tmp;
+	int				blocks;
 
-	data = (t_data) {NULL, NULL, 0, NULL};
+	data = (t_data) {NULL, NULL, NULL, 0};
+	blocks = 0;
 	if (!(dirp = opendir(path)))
-		ft_error(1, path);
+		return (check_ifdir(path, flags));
 	while ((file = readdir(dirp)) != NULL)
 		if ((file->d_name)[0] != '.' || flags->aflag == 1)
 		{
-			get_data(ft_strdup(file->d_name), path, &data);
+			get_data(ft_strdup(file->d_name), path, &data, &blocks);
 			if (!(tmp = ft_lstnew(&data, sizeof(t_data))))
 				return (NULL);
 			if (!lst)
@@ -82,5 +97,7 @@ t_list		*start_list(char *path, t_flags *flags, t_list *lst)
 			else
 				ft_lstaddend(&lst, tmp);
 		}
+	flags->blocks = blocks;
+	closedir(dirp);
 	return (lst);
 }

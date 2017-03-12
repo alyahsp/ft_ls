@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/11 18:26:41 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 19:45:42 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/12 17:40:27 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ static int	sort_revascii(void *a, void *b)
 
 static int	sort_time(void *a, void *b)
 {
-	if (((t_data *)a)->stats->st_mtimespec.tv_sec <
-	((t_data *)b)->stats->st_mtimespec.tv_sec)
+	if (((t_data *)a)->stats.st_mtimespec.tv_sec <
+	((t_data *)b)->stats.st_mtimespec.tv_sec)
 		return (0);
-	else if (((t_data *)a)->stats->st_mtimespec.tv_sec ==
-	((t_data *)b)->stats->st_mtimespec.tv_sec)
+	else if (((t_data *)a)->stats.st_mtimespec.tv_sec ==
+	((t_data *)b)->stats.st_mtimespec.tv_sec)
 	{
-		if (((t_data *)a)->stats->st_mtimespec.tv_nsec <
-		((t_data *)b)->stats->st_mtimespec.tv_nsec)
+		if (((t_data *)a)->stats.st_mtimespec.tv_nsec <
+		((t_data *)b)->stats.st_mtimespec.tv_nsec)
 			return (0);
-		else if (((t_data *)a)->stats->st_mtimespec.tv_nsec ==
-		((t_data *)b)->stats->st_mtimespec.tv_nsec)
+		else if (((t_data *)a)->stats.st_mtimespec.tv_nsec ==
+		((t_data *)b)->stats.st_mtimespec.tv_nsec)
 			return (sort_ascii(a, b));
 	}
 	return (1);
@@ -46,17 +46,17 @@ static int	sort_time(void *a, void *b)
 
 static int	sort_revtime(void *a, void *b)
 {
-	if (((t_data *)a)->stats->st_mtimespec.tv_sec >
-	((t_data *)b)->stats->st_mtimespec.tv_sec)
+	if (((t_data *)a)->stats.st_mtimespec.tv_sec >
+	((t_data *)b)->stats.st_mtimespec.tv_sec)
 		return (0);
-	else if (((t_data *)a)->stats->st_mtimespec.tv_sec ==
-	((t_data *)b)->stats->st_mtimespec.tv_sec)
+	else if (((t_data *)a)->stats.st_mtimespec.tv_sec ==
+	((t_data *)b)->stats.st_mtimespec.tv_sec)
 	{
-		if (((t_data *)a)->stats->st_mtimespec.tv_nsec >
-		((t_data *)b)->stats->st_mtimespec.tv_nsec)
+		if (((t_data *)a)->stats.st_mtimespec.tv_nsec >
+		((t_data *)b)->stats.st_mtimespec.tv_nsec)
 			return (0);
-		else if (((t_data *)a)->stats->st_mtimespec.tv_nsec ==
-		((t_data *)b)->stats->st_mtimespec.tv_nsec)
+		else if (((t_data *)a)->stats.st_mtimespec.tv_nsec ==
+		((t_data *)b)->stats.st_mtimespec.tv_nsec)
 			return (sort_ascii(a, b));
 	}
 	return (1);

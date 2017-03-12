@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 20:42:08 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/12 15:17:56 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_error(int i, char *str)
 		ft_printf("ft_ls: %s: Permission denied\n", str);
 	if (i == 2)
 	{
-		// perror(i);
+		perror(str);
 		exit(1);
 	}
 	exit(1);
