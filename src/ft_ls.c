@@ -6,11 +6,19 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/13 19:13:07 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/13 19:35:08 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+char	*get_time(t_list *lst)
+{
+	char *mode;
+
+	
+	return (mode);
+}
 
 char	*get_time(t_list *lst)
 {
@@ -38,6 +46,7 @@ void	print_llst(t_list *lst, t_flags *f)
 	struct passwd	*pwd;
 	struct group	*grp;
 	char			*times;
+	char			*mode;
 
 	pwd = getpwuid(((t_data*)lst->content)->stats.st_uid);
 	grp = getgrgid(((t_data*)lst->content)->stats.st_gid);
@@ -45,6 +54,7 @@ void	print_llst(t_list *lst, t_flags *f)
 	while (lst)
 	{
 		times = get_time(lst);
+		mode = get_mode(lst);
 		ft_printf("%d %s %s %d %s %s\n", ((t_data*)lst->content)->stats.st_nlink,
 		pwd->pw_name, grp->gr_name, ((t_data*)lst->content)->stats.st_size,
 		times, ((t_data *)(lst->content))->file_name);
