@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/12 18:08:09 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/13 15:52:38 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 	t_list			*tmp;
 	int				blocks;
 
-	data = (t_data) {NULL, NULL, NULL, 0};
+	data = (t_data) {NULL, NULL, 0};
 	blocks = 0;
 	if (!(dirp = opendir(path)))
 		return (check_ifdir(path, flags));

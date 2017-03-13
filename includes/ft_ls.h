@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/12 18:07:35 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/13 15:52:32 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct		s_data
 {
 	char			*file_name;
 	char			*path;
-	char			*mode;
 	struct stat		stats;
 }					t_data;
 
