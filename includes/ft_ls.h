@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/13 15:52:32 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/14 18:29:39 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,19 @@ typedef struct		s_data
 {
 	char			*file_name;
 	char			*path;
+	char			*recpath;
 	struct stat		stats;
 }					t_data;
 
 void				get_flag(char *str, t_flags *flags);
+void				ft_rec(t_list *lst, t_flags *f);
+void				print_lst(t_list *lst, t_flags *f);
+void				print_llst(t_list *lst, t_flags *f);
 t_list				*start_list(char *path, t_flags *flags, t_list *lst);
 t_list				*ft_lstsort(t_list *lst, t_flags *f);
 void				ft_error(int i, char *str);
 void				ft_ls(t_list *lst, t_flags *flags);
+void				get_mode(int i);
+char				*get_time(time_t i);
 
 #endif

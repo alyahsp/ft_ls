@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/12 15:17:56 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/14 19:09:17 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_error(int i, char *str)
 {
+	errno = 0;
 	if (i == 0)
 	{
 		ft_putstr_fd("ft_ls: illegal option -- ", 2);
@@ -28,7 +29,6 @@ void	ft_error(int i, char *str)
 		perror(str);
 		exit(1);
 	}
-	exit(1);
 }
 
 int		main(int argc, char **argv)
@@ -56,6 +56,6 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	(check == 0) ? lst = start_list(".", &flags, lst) : 0;
-	ft_ls(lst, &flags);
+	(lst) ? ft_ls(lst, &flags): 0;
 	return (0);
 }

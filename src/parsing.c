@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/13 15:52:38 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/14 19:16:53 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,25 @@ void			get_flag(char *str, t_flags *flags)
 static t_list	*check_ifdir(char *path, t_flags *f)
 {
 	struct stat		stats;
+	struct passwd	*pwd;
+	struct group	*grp;
+	char			*times;
 
 	if (stat(path, &stats) < 0)
 		return (NULL);
+	pwd = getpwuid(stats.st_uid);
+	grp = getgrgid(stats.st_gid);
 	if (S_ISDIR(stats.st_mode))
 		ft_error(1, path);
 	else if (!f->lflag)
-		ft_printf("%s\n\n", path);
+		ft_printf("%s\n", path);
 	else
-		ft_printf("Not managed yet");
+	{
+		get_mode(stats.st_mode);
+		times = get_time(stats.st_mtimespec.tv_sec);
+		ft_printf("   %d  %s %s %d %s %s\n", stats.st_nlink, pwd->pw_name,
+		grp->gr_name, stats.st_size, times, path);
+	}
 	return (NULL);
 }
 
@@ -60,11 +70,12 @@ static void		get_data(char *name, char *path, t_data *data, int *blk)
 	struct stat		stats;
 	char			*tmp;
 
-	data->path = path;
+	data->recpath = path;
 	if (ft_strcmp(".", name) || ft_strcmp("..", name))
 	{
 		tmp = ft_strjoin(path, "/");
 		path = ft_strjoin(tmp, name);
+		data->path = path;
 	}
 	free(tmp);
 	if (lstat(path, &stats) < 0)
@@ -82,7 +93,7 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 	t_list			*tmp;
 	int				blocks;
 
-	data = (t_data) {NULL, NULL, 0};
+	data = (t_data) {NULL, NULL, NULL, 0};
 	blocks = 0;
 	if (!(dirp = opendir(path)))
 		return (check_ifdir(path, flags));
