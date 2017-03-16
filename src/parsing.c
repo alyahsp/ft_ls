@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/15 19:38:40 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/16 22:25:40 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,6 @@ void			get_flag(char *str, t_flags *flags)
 	}
 }
 
-static t_list	*check_ifdir(char *path, t_flags *f, t_list *lst)
-{
-	struct stat		stats;
-	struct passwd	*pwd;
-	struct group	*grp;
-	char			*times;
-
-	if (stat(path, &stats) < 0)
-		return (NULL);
-	pwd = getpwuid(stats.st_uid);
-	grp = getgrgid(stats.st_gid);
-	if (S_ISDIR(stats.st_mode))
-		ft_error(1, path);
-	else if (!f->lflag)
-		ft_printf("%s\n", path);
-	else
-	{
-		get_mode(stats.st_mode);
-		times = get_time(stats.st_mtimespec.tv_sec);
-		ft_printf("   %d  %s %s %d %s %s\n", stats.st_nlink, pwd->pw_name,
-		grp->gr_name, stats.st_size, times, path);
-	}
-	if (!lst)
-		return (NULL);
-	else
-		return (lst);
-}
-
 static void		get_data(char *name, char *path, t_data *data, int *blk)
 {
 	struct stat		stats;
@@ -99,7 +71,7 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 	data = (t_data) {NULL, NULL, NULL, 0};
 	blocks = 0;
 	if (!(dirp = opendir(path)))
-		return (check_ifdir(path, flags, lst));
+		return (lst);
 	while ((file = readdir(dirp)) != NULL)
 		if ((file->d_name)[0] != '.' || flags->aflag == 1)
 		{
