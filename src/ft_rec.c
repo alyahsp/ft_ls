@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 12:07:56 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/16 22:30:57 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/17 19:32:39 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	ft_rec(t_list *lst, t_flags *f)
 			if (S_ISDIR(((t_data*)lst->content)->stats.st_mode))
 			{
 				ft_printf("\n%s:\n", ((t_data *)lst->content)->path);
-				ndir = start_list(((t_data*)lst->content)->path, f, ndir);
+				ndir = ft_lstnew(start_list(((t_data*)lst->content)->path,
+				f, ndir), sizeof(t_list));
 				ft_ls(ndir, NULL, f);
 				ft_memdel((void **)&ndir);
 			}

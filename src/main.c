@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/16 22:27:00 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/17 19:08:11 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,34 @@ void	ft_error(int i, char *str)
 	if (i == 1)
 		ft_printf("ft_ls: %s: Permission denied\n", str);
 	if (i == 2)
-	{
-		perror(str);
-		exit(1);
-	}
-}
-
-static t_list	*get_flst(char **argv, t_list *files, t_flags *flags)
-{
-	int		i;
-	int		check;
-	i = 1;
-	while (argv[i])
-	{
-		if ((argv[i][0] == '-' && argv[i][1] != '-') && check == 0)
-			get_flag(argv[i], flags);
-		else if (argv[i][0] == '-' && argv[i][1] == '-')
-			check = 1;
-		else
-		{
-			files = start_flist(argv[i], flags, files);
-			check = 1;
-		}
-		i++;
-	}
-	return (files);
+		ft_printf("ft_ls: %s: No such file or directory\n", str);
 }
 
 static t_list	*get_list(char **argv, t_list *lst, int *check, t_flags *flags)
 {
-	int		i;
+	int			i;
+	t_list		*dlst;
+	t_list		*tmp;
 
 	i = 1;
+	dlst = NULL;
 	while (argv[i])
 	{
-		if ((argv[i][0] == '-' && argv[i][1] != '-') && (*check) == 0)
-			;
-		else if (argv[i][0] == '-' && argv[i][1] == '-')
+		if (argv[i][0] == '-' && argv[i][1] == '-')
 			(*check) = 1;
-		else
+		else if ((argv[i][0] != '-') || (*check) == 1)
 		{
-			lst = start_list(argv[i], flags, lst);
 			(*check) = 1;
+			if ((dlst = start_list(argv[i], flags, dlst)))
+			{
+				if (!(tmp = ft_lstnew(dlst, sizeof(t_list))))
+					return (NULL);
+				if (!lst)
+					lst = tmp;
+				else
+					ft_lstaddend(&lst, tmp);
+				ft_memdel((void **)&dlst);
+			}
 		}
 		i++;
 	}
@@ -78,18 +64,17 @@ int		main(int argc, char **argv)
 	int 	check;
 	t_flags	flags;
 	t_list	*lst;
-	t_list	*files;
+	t_list	*fls;
 
 	check = 0;
 	lst = NULL;
-	files = NULL;
+	fls = NULL;
 	flags = (t_flags) {0, 0, 0, 0, 0, 0, 0};
-	files = get_flst(argv, files, &flags);
+	fls = get_flst(argv, fls, &flags);
 	lst = get_list(argv, lst, &check, &flags);
-	(check == 0) ? lst = start_list(".", &flags, lst) : 0;
-	if (files)
-		ft_fls(files, &flags);
-	if (lst)
-		ft_ls(lst, files, &flags);
+	if (check == 0)
+		lst = ft_lstnew(start_list(".", &flags, lst), sizeof(t_data));
+	(fls) ? ft_fls(fls, &flags) : 0;
+	(lst) ? ft_ls(lst, fls, &flags) : 0;
 	return (0);
 }

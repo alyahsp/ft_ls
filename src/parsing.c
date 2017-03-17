@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/16 22:25:40 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/17 19:35:42 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,23 @@ static void		get_data(char *name, char *path, t_data *data, int *blk)
 	*blk += stats.st_blocks;
 }
 
+static t_list	*check_ifdir(char *path, t_list *files)
+{
+	struct stat		stats;
+
+	if (stat(path, &stats) < 0)
+	{
+		ft_error(2, path);
+		return (files);
+	}
+	if (S_ISDIR(stats.st_mode))
+	{
+		ft_error(1, path);
+		return (files);
+	}
+	return (files);
+}
+
 t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 {
 	t_data			data;
@@ -71,7 +88,7 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 	data = (t_data) {NULL, NULL, NULL, 0};
 	blocks = 0;
 	if (!(dirp = opendir(path)))
-		return (lst);
+		return (check_ifdir(path, lst));
 	while ((file = readdir(dirp)) != NULL)
 		if ((file->d_name)[0] != '.' || flags->aflag == 1)
 		{

@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/16 22:44:09 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/17 19:35:18 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_time(time_t i)
 	return (times);
 }
 
-void	print_llst(t_list *lst, t_list *files, t_flags *f)
+void	print_llst(t_list *lst, t_list *files, t_flags *f, int check)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
@@ -65,9 +65,9 @@ void	print_llst(t_list *lst, t_list *files, t_flags *f)
 
 	pwd = getpwuid(((t_data*)lst->content)->stats.st_uid);
 	grp = getgrgid(((t_data*)lst->content)->stats.st_gid);
-	if (files && ((t_data*)lst->content)->recpath)
+	if ((files && ((t_data*)lst->content)->recpath) || check)
 		ft_printf("\n%s:\n", ((t_data*)lst->content)->recpath);
-	if (S_ISDIR(((t_data*)lst->content)->stats.st_mode))
+	if (S_ISDIR(((t_data*)lst->content)->stats.st_mode) || check)
 		ft_printf("total %d\n", f->blocks);
 	while (lst)
 	{
@@ -83,9 +83,9 @@ void	print_llst(t_list *lst, t_list *files, t_flags *f)
 	}
 }
 
-void	print_lst(t_list *lst, t_list *files, t_flags *f)
+void	print_lst(t_list *lst, t_list *files, t_flags *f, int check)
 {
-	if (files && ((t_data*)lst->content)->recpath)
+	if ((files && ((t_data*)lst->content)->recpath) || check)
 		ft_printf("\n%s:\n", ((t_data*)lst->content)->recpath);
 	while (lst)
 	{
@@ -96,11 +96,20 @@ void	print_lst(t_list *lst, t_list *files, t_flags *f)
 
 void	ft_ls(t_list *lst, t_list *files, t_flags *f)
 {
-	lst = ft_lstsort(lst, f);
-	if (!f->lflag)
-		print_lst(lst, files, f);
-	if (f->lflag)
-		print_llst(lst, files, f);
-	if (f->recflag)
-		ft_rec(lst, f);
+	int i;
+
+	i = 0;
+	if (lst->next)
+		i = 1;
+	while (lst)
+	{
+		lst->content = ft_lstsort(lst->content, f);
+		if (!f->lflag)
+			print_lst(lst->content, files, f, i);
+		if (f->lflag)
+			print_llst(lst->content, files, f, i);
+		if (f->recflag)
+			ft_rec(lst->content, f);
+		lst = lst->next;
+	}
 }
