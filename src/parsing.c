@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/17 19:35:42 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/18 19:58:24 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			get_flag(char *str, t_flags *flags)
 	}
 }
 
-static void		get_data(char *name, char *path, t_data *data, int *blk)
+static void		get_data(char *name, char *path, t_data *data)
 {
 	struct stat		stats;
 	char			*tmp;
@@ -57,7 +57,7 @@ static void		get_data(char *name, char *path, t_data *data, int *blk)
 		return ;
 	data->stats = stats;
 	data->file_name = name;
-	*blk += stats.st_blocks;
+	data->blocks = stats.st_blocks;
 }
 
 static t_list	*check_ifdir(char *path, t_list *files)
@@ -83,16 +83,14 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 	DIR				*dirp;
 	struct dirent	*file;
 	t_list			*tmp;
-	int				blocks;
 
-	data = (t_data) {NULL, NULL, NULL, 0};
-	blocks = 0;
+	data = (t_data) {NULL, NULL, NULL, 0, 0};
 	if (!(dirp = opendir(path)))
 		return (check_ifdir(path, lst));
 	while ((file = readdir(dirp)) != NULL)
 		if ((file->d_name)[0] != '.' || flags->aflag == 1)
 		{
-			get_data(ft_strdup(file->d_name), path, &data, &blocks);
+			get_data(ft_strdup(file->d_name), path, &data);
 			if (!(tmp = ft_lstnew(&data, sizeof(t_data))))
 				return (NULL);
 			if (!lst)
@@ -100,7 +98,36 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 			else
 				ft_lstaddend(&lst, tmp);
 		}
-	flags->blocks = blocks;
 	closedir(dirp);
+	return (lst);
+}
+
+t_list			*get_list(char **argv, t_list *lst, int *check, t_flags *f)
+{
+	int			i;
+	t_list		*dlst;
+	t_list		*tmp;
+
+	i = 1;
+	dlst = NULL;
+	while (argv[i])
+	{
+		printf("argv[i] = %s\n", argv[i]);
+		if (argv[i][0] == '-' && argv[i][1] == '-')
+			(*check) = 1;
+		else if ((argv[i][0] != '-') || (*check) == 1)
+			if ((*check = 1) && (dlst = start_list(argv[i], f, dlst)))
+			{
+				if (!(tmp = ft_lstnew(dlst, sizeof(t_list))))
+					return (NULL);
+				if (!lst)
+					lst = tmp;
+				else
+					ft_lstaddend(&lst, tmp);
+				ft_memdel((void **)&dlst);
+			}
+		i++;
+	}
+	lst = ft_lstsort(lst, f);
 	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/17 19:32:51 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/18 19:25:30 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct		s_flags
 	int				rflag;
 	int				tflag;
 	int				fflag;
-	int				blocks;
 }					t_flags;
 
 typedef struct		s_data
@@ -40,14 +39,16 @@ typedef struct		s_data
 	char			*file_name;
 	char			*path;
 	char			*recpath;
+	int				blocks;
 	struct stat		stats;
 }					t_data;
 
 void				get_flag(char *str, t_flags *flags);
 void				ft_rec(t_list *lst, t_flags *f);
-void				print_lst(t_list *lst, t_list *files, t_flags *f, int check);
-void				print_llst(t_list *lst, t_list *files, t_flags *f, int check);
+void				print_lst(t_list *lst, t_list *files, int check);
+void				print_llst(t_list *lst, t_list *files, int check);
 void				ft_fls(t_list *files, t_flags *f);
+t_list				*get_list(char **argv, t_list *lst, int *check, t_flags *f);
 t_list				*get_flst(char **argv, t_list *fls, t_flags *flags);
 t_list				*start_list(char *path, t_flags *flags, t_list *lst);
 t_list				*ft_lstsort(t_list *lst, t_flags *f);

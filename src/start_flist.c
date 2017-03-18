@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 21:23:02 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/17 19:03:03 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/18 19:25:20 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void			ft_fls(t_list *files, t_flags *f)
 	pwd = getpwuid(((t_data*)files->content)->stats.st_uid);
 	grp = getgrgid(((t_data*)files->content)->stats.st_gid);
 	if (!f->lflag)
-		print_lst(files, files, f, 0);
+		print_lst(files, files, 0);
 	else if (f->lflag)
-		print_llst(files, files, f, 0);
+		print_llst(files, files, 0);
 }
 
 static t_list	*check_ifdir(char *path, t_flags *f, t_list *files)
@@ -40,10 +40,7 @@ static t_list	*check_ifdir(char *path, t_flags *f, t_list *files)
 		return (files);
 	}
 	if (S_ISDIR(stats.st_mode))
-	{
-		ft_error(1, path);
 		return (files);
-	}
 	data = (t_data) {NULL, NULL, NULL, 0};
 	data.file_name = path;
 	data.stats = stats;

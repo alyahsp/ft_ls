@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/17 19:35:18 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/18 19:28:28 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,34 +56,7 @@ char	*get_time(time_t i)
 	return (times);
 }
 
-void	print_llst(t_list *lst, t_list *files, t_flags *f, int check)
-{
-	struct passwd	*pwd;
-	struct group	*grp;
-	char			*times;
-	int				nlink;
-
-	pwd = getpwuid(((t_data*)lst->content)->stats.st_uid);
-	grp = getgrgid(((t_data*)lst->content)->stats.st_gid);
-	if ((files && ((t_data*)lst->content)->recpath) || check)
-		ft_printf("\n%s:\n", ((t_data*)lst->content)->recpath);
-	if (S_ISDIR(((t_data*)lst->content)->stats.st_mode) || check)
-		ft_printf("total %d\n", f->blocks);
-	while (lst)
-	{
-		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
-		get_mode(((t_data*)lst->content)->stats.st_mode);
-		nlink = ((t_data*)lst->content)->stats.st_nlink;
-		// if (S_ISLNK(((t_data*)lst->content)->stats.st_mode))
-		ft_printf("   %d  %s %s %d %s %s\n", nlink, pwd->pw_name, grp->gr_name,
-		((t_data*)lst->content)->stats.st_size, times,
-		((t_data *)(lst->content))->file_name);
-		free(times);
-		lst = lst->next;
-	}
-}
-
-void	print_lst(t_list *lst, t_list *files, t_flags *f, int check)
+void	print_lst(t_list *lst, t_list *files, int check)
 {
 	if ((files && ((t_data*)lst->content)->recpath) || check)
 		ft_printf("\n%s:\n", ((t_data*)lst->content)->recpath);
@@ -105,9 +78,9 @@ void	ft_ls(t_list *lst, t_list *files, t_flags *f)
 	{
 		lst->content = ft_lstsort(lst->content, f);
 		if (!f->lflag)
-			print_lst(lst->content, files, f, i);
+			print_lst(lst->content, files, i);
 		if (f->lflag)
-			print_llst(lst->content, files, f, i);
+			print_llst(lst->content, files, i);
 		if (f->recflag)
 			ft_rec(lst->content, f);
 		lst = lst->next;
