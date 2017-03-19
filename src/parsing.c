@@ -112,7 +112,7 @@ t_list			*get_list(char **argv, t_list *lst, int *check, t_flags *f)
 	dlst = NULL;
 	while (argv[i])
 	{
-		printf("argv[i] = %s\n", argv[i]);
+		//printf("argv[i] = %s\n", argv[i]);
 		if (argv[i][0] == '-' && argv[i][1] == '-')
 			(*check) = 1;
 		else if ((argv[i][0] != '-') || (*check) == 1)
@@ -128,6 +128,6 @@ t_list			*get_list(char **argv, t_list *lst, int *check, t_flags *f)
 			}
 		i++;
 	}
-	lst = ft_lstsort(lst, f);
+	// lst = ft_lstsort(lst, f);
 	return (lst);
 }

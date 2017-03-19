@@ -45,8 +45,8 @@ typedef struct		s_data
 
 void				get_flag(char *str, t_flags *flags);
 void				ft_rec(t_list *lst, t_flags *f);
-void				print_lst(t_list *lst, t_list *files, int check);
-void				print_llst(t_list *lst, t_list *files, int check);
+void				print_lst(t_list *lst, t_list *files, int check, int *fst);
+void				print_llst(t_list *lst, t_list *files, int check, int *fst);
 void				ft_fls(t_list *files, t_flags *f);
 t_list				*get_list(char **argv, t_list *lst, int *check, t_flags *f);
 t_list				*get_flst(char **argv, t_list *fls, t_flags *flags);

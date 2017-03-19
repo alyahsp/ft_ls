@@ -18,14 +18,16 @@ void			ft_fls(t_list *files, t_flags *f)
 	struct group	*grp;
 	int				nlink;
 	char			*times;
+	int				fst;
 
+	fst = 0;
 	files = ft_lstsort(files, f);
 	pwd = getpwuid(((t_data*)files->content)->stats.st_uid);
 	grp = getgrgid(((t_data*)files->content)->stats.st_gid);
 	if (!f->lflag)
-		print_lst(files, files, 0);
+		print_lst(files, files, 0, &fst);
 	else if (f->lflag)
-		print_llst(files, files, 0);
+		print_llst(files, files, 0, &fst);
 }
 
 static t_list	*check_ifdir(char *path, t_flags *f, t_list *files)
