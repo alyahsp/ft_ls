@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 21:48:09 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 23:23:53 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@ void	ft_error(int i, char *str)
 	}
 }
 
-void			get_flag(char *str, t_flags *flags)
+void		get_flag(char *str, t_flags *flags, int i)
 {
-	int			i;
-
-	i = 1;
 	while (str[i])
 	{
 		if (str[i] == 'l')
@@ -57,6 +54,8 @@ void			get_flag(char *str, t_flags *flags)
 			flags->fflag = 1;
 			flags->aflag = 1;
 		}
+		else if (str[i] == '1')
+			flags->oflag = 1;
 		else
 			ft_error(0, &str[i]);
 		i++;
@@ -73,7 +72,7 @@ int		main(int argc, char **argv)
 	check = 0;
 	lst = NULL;
 	fls = NULL;
-	flags = (t_flags) {0, 0, 0, 0, 0, 0};
+	flags = (t_flags) {0, 0, 0, 0, 0, 0, 0};
 	fls = get_flst(argv, fls, &flags);
 	lst = get_list(argv, lst, &check, &flags);
 	if (check == 0)

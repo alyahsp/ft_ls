@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/18 19:17:55 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 21:44:58 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 23:14:15 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void		get_mode(int i)
 
 char		*get_time(time_t i)
 {
-	time_t			curtime;
-	char			*mtime;
-	char			*times;
-	char			*tmp;
+	time_t	curtime;
+	char	*mtime;
+	char	*times;
+	char	*tmp;
 
 	time(&curtime);
 	mtime = ctime(&i);
@@ -78,9 +78,9 @@ char		*get_time(time_t i)
 	return (times);
 }
 
-static int	get_blocks(t_list *lst)
+int				get_blocks(t_list *lst)
 {
-	int total;
+	int		total;
 	t_list *tmp;
 
 	total = 0;
@@ -91,33 +91,6 @@ static int	get_blocks(t_list *lst)
 		tmp = tmp->next;
 	}
 	return (total);
-}
-
-void	lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
-{
-	char			*times;
-	char			buf[1000];
-	int				nlink;
-
-	while (lst)
-	{
-		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
-		get_mode(((t_data*)lst->content)->stats.st_mode);
-		nlink = ((t_data*)lst->content)->stats.st_nlink;
-		ft_printf("   %d  %s  %s  %d %s ", nlink, pwd->pw_name, grp->gr_name,
-		((t_data*)lst->content)->stats.st_size, times);
-		if (S_ISLNK(((t_data*)lst->content)->stats.st_mode))
-		{
-			ft_bzero(buf, 1000);
-			readlink(((t_data*)lst->content)->path, buf, 999);
-			ft_printf(" %s -> %s\n", ((t_data *)(lst->content))->file_name,
-			buf);
-		}
-		else
-			ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
-		free(times);
-		lst = lst->next;
-	}
 }
 
 void	print_llst(t_list *lst, t_list *files, int check, int *fst)

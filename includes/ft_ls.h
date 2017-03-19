@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 21:15:59 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 23:24:18 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <uuid/uuid.h>
 # include <grp.h>
 # include <stdio.h>
+# include <sys/ioctl.h>
 # include "../libft/libft.h"
 
 typedef struct		s_flags
@@ -32,6 +33,7 @@ typedef struct		s_flags
 	int				rflag;
 	int				tflag;
 	int				fflag;
+	int				oflag;
 }					t_flags;
 
 typedef struct		s_data
@@ -43,11 +45,12 @@ typedef struct		s_data
 	struct stat		stats;
 }					t_data;
 
-void				get_flag(char *str, t_flags *flags);
+void				get_flag(char *str, t_flags *flags, int i);
 void				ft_rec(t_list *lst, t_flags *f);
 void				print_lst(t_list *lst, t_list *files, int check, int *fst);
 void				print_llst(t_list *lst, t_list *files, int check, int *fst);
 void				ft_fls(t_list *files, t_flags *f);
+void				lprinter(t_list *lst, struct passwd *pwd, struct group *grp);
 t_list				*get_list(char **argv, t_list *lst, int *check, t_flags *f);
 t_list				*get_flst(char **argv, t_list *fls, t_flags *flags);
 t_list				*start_list(char *path, t_flags *flags, t_list *lst);
@@ -58,5 +61,6 @@ void				ft_ls(t_list *lst, t_list *files, t_flags *flags);
 void				get_mode(int i);
 char				*get_time(time_t i);
 int					check_iflink(char *path);
+int					get_blocks(t_list *lst);
 
 #endif

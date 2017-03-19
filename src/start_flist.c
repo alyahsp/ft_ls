@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 21:23:02 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 21:15:33 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 23:22:07 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_list			*get_flst(char **argv, t_list *fls, t_flags *flags)
 	while (argv[i])
 	{
 		if ((argv[i][0] == '-' && argv[i][1] != '-') && check == 0)
-			get_flag(argv[i], flags);
+			get_flag(argv[i], flags, 1);
 		else if (argv[i][0] == '-' && argv[i][1] == '-')
 			check = 1;
 		else
