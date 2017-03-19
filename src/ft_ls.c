@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/18 19:28:28 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 15:18:05 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_lst(t_list *lst, t_list *files, int check, int *fst)
 {
-	if (*fst && !files)
+	if (*fst && !files && check)
 	{
 		ft_printf("%s:\n", ((t_data*)lst->content)->recpath);
 		*fst = 0;

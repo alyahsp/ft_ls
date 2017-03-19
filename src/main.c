@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/18 19:19:29 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 21:48:09 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_error(int i, char *str)
 {
-	errno = 0;
 	if (i == 0)
 	{
 		ft_putstr_fd("ft_ls: illegal option -- ", 2);
@@ -23,9 +22,45 @@ void	ft_error(int i, char *str)
 		exit(1);
 	}
 	if (i == 1)
-		ft_printf("ft_ls: %s: Permission denied\n", str);
-	if (i == 2)
-		ft_printf("ft_ls: %s: No such file or directory\n", str);
+	{
+		ft_putstr_fd("ft_ls: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+	}
+	else
+	{
+		ft_putendl_fd(strerror(errno), 2);
+		exit(1);
+	}
+}
+
+void			get_flag(char *str, t_flags *flags)
+{
+	int			i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] == 'l')
+			flags->lflag = 1;
+		else if (str[i] == 'R')
+			flags->recflag = 1;
+		else if (str[i] == 'a')
+			flags->aflag = 1;
+		else if (str[i] == 'r')
+			flags->rflag = 1;
+		else if (str[i] == 't')
+			flags->tflag = 1;
+		else if (str[i] == 'f')
+		{
+			flags->fflag = 1;
+			flags->aflag = 1;
+		}
+		else
+			ft_error(0, &str[i]);
+		i++;
+	}
 }
 
 int		main(int argc, char **argv)

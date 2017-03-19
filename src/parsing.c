@@ -6,41 +6,24 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/18 19:58:24 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 21:48:22 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void			get_flag(char *str, t_flags *flags)
+int				check_iflink(char *path)
 {
-	int			i;
+	struct stat		stats;
 
-	i = 1;
-	while (str[i])
-	{
-		if (str[i] == 'l')
-			flags->lflag = 1;
-		else if (str[i] == 'R')
-			flags->recflag = 1;
-		else if (str[i] == 'a')
-			flags->aflag = 1;
-		else if (str[i] == 'r')
-			flags->rflag = 1;
-		else if (str[i] == 't')
-			flags->tflag = 1;
-		else if (str[i] == 'f')
-		{
-			flags->fflag = 1;
-			flags->aflag = 1;
-		}
-		else
-			ft_error(0, &str[i]);
-		i++;
-	}
+	if (lstat(path, &stats) < 0)
+		return (0);
+	if (S_ISLNK(stats.st_mode))
+		return (1);
+	return (0);
 }
 
-static void		get_data(char *name, char *path, t_data *data)
+static int		get_data(char *name, char *path, t_data *data)
 {
 	struct stat		stats;
 	char			*tmp;
@@ -54,10 +37,14 @@ static void		get_data(char *name, char *path, t_data *data)
 	}
 	free(tmp);
 	if (lstat(path, &stats) < 0)
-		return ;
-	data->stats = stats;
+	{
+		ft_error(1, name);
+		return (0);
+	}
 	data->file_name = name;
+	data->stats = stats;
 	data->blocks = stats.st_blocks;
+	return (1);
 }
 
 static t_list	*check_ifdir(char *path, t_list *files)
@@ -66,7 +53,7 @@ static t_list	*check_ifdir(char *path, t_list *files)
 
 	if (stat(path, &stats) < 0)
 	{
-		ft_error(2, path);
+		ft_error(1, path);
 		return (files);
 	}
 	if (S_ISDIR(stats.st_mode))
@@ -85,18 +72,22 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 	t_list			*tmp;
 
 	data = (t_data) {NULL, NULL, NULL, 0, 0};
+	if (flags->lflag && check_iflink(path))
+		return (lst);
 	if (!(dirp = opendir(path)))
 		return (check_ifdir(path, lst));
 	while ((file = readdir(dirp)) != NULL)
 		if ((file->d_name)[0] != '.' || flags->aflag == 1)
 		{
-			get_data(ft_strdup(file->d_name), path, &data);
-			if (!(tmp = ft_lstnew(&data, sizeof(t_data))))
+			if (get_data(ft_strdup(file->d_name), path, &data))
+			{
+				if (!(tmp = ft_lstnew(&data, sizeof(t_data))))
 				return (NULL);
-			if (!lst)
+				if (!lst)
 				lst = tmp;
-			else
+				else
 				ft_lstaddend(&lst, tmp);
+			}
 		}
 	closedir(dirp);
 	return (lst);
@@ -112,7 +103,6 @@ t_list			*get_list(char **argv, t_list *lst, int *check, t_flags *f)
 	dlst = NULL;
 	while (argv[i])
 	{
-		//printf("argv[i] = %s\n", argv[i]);
 		if (argv[i][0] == '-' && argv[i][1] == '-')
 			(*check) = 1;
 		else if ((argv[i][0] != '-') || (*check) == 1)
@@ -128,6 +118,5 @@ t_list			*get_list(char **argv, t_list *lst, int *check, t_flags *f)
 			}
 		i++;
 	}
-	// lst = ft_lstsort(lst, f);
-	return (lst);
+	return (ft_argsort(lst, f));
 }

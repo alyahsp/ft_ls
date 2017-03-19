@@ -6,14 +6,14 @@
 #    By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/27 17:27:38 by spalmaro          #+#    #+#              #
-#    Updated: 2017/03/18 19:33:58 by spalmaro         ###   ########.fr        #
+#    Updated: 2017/03/19 14:55:37 by spalmaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 
 C_FILES = main.c parsing.c ft_ls.c ft_lstsort.c ft_rec.c start_flist.c \
-			ft_lflag.c
+			ft_lflag.c ft_argsort.c
 
 SRC_PATH = src/
 

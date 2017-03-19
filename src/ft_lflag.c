@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/18 19:17:55 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/18 19:44:54 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 21:44:58 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static int	get_blocks(t_list *lst)
 void	lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
 {
 	char			*times;
+	char			buf[1000];
 	int				nlink;
 
 	while (lst)
@@ -103,10 +104,17 @@ void	lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
 		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
 		get_mode(((t_data*)lst->content)->stats.st_mode);
 		nlink = ((t_data*)lst->content)->stats.st_nlink;
-		// if (S_ISLNK(((t_data*)lst->content)->stats.st_mode))
-		ft_printf("   %d  %s  %s  %d %s %s\n", nlink, pwd->pw_name, grp->gr_name,
-		((t_data*)lst->content)->stats.st_size, times,
-		((t_data *)(lst->content))->file_name);
+		ft_printf("   %d  %s  %s  %d %s ", nlink, pwd->pw_name, grp->gr_name,
+		((t_data*)lst->content)->stats.st_size, times);
+		if (S_ISLNK(((t_data*)lst->content)->stats.st_mode))
+		{
+			ft_bzero(buf, 1000);
+			readlink(((t_data*)lst->content)->path, buf, 999);
+			ft_printf(" %s -> %s\n", ((t_data *)(lst->content))->file_name,
+			buf);
+		}
+		else
+			ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
 		free(times);
 		lst = lst->next;
 	}
@@ -121,14 +129,16 @@ void	print_llst(t_list *lst, t_list *files, int check, int *fst)
 	{
 		pwd = getpwuid(((t_data*)lst->content)->stats.st_uid);
 		grp = getgrgid(((t_data*)lst->content)->stats.st_gid);
-		if (*fst && !files)
+		if (*fst && !files && check)
 		{
 			ft_printf("%s:\n", ((t_data*)lst->content)->recpath);
 			*fst = 0;
 		}
-		else if ((files && ((t_data*)lst->content)->recpath) || check)
+		else if (((files && ((t_data*)lst->content)->recpath) || check)
+		&& !S_ISLNK(((t_data*)lst->content)->stats.st_mode))
 			ft_printf("\n%s:\n", ((t_data*)lst->content)->recpath);
-		if (!files || check)
+		if ((!files || check)
+		&& !S_ISLNK(((t_data*)lst->content)->stats.st_mode))
 			ft_printf("total %d\n", get_blocks(lst));
 		lprinter(lst, pwd, grp);
 	}

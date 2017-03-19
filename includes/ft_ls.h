@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/18 19:25:30 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 21:15:59 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ t_list				*get_list(char **argv, t_list *lst, int *check, t_flags *f);
 t_list				*get_flst(char **argv, t_list *fls, t_flags *flags);
 t_list				*start_list(char *path, t_flags *flags, t_list *lst);
 t_list				*ft_lstsort(t_list *lst, t_flags *f);
+t_list				*ft_argsort(t_list *lst, t_flags *f);
 void				ft_error(int i, char *str);
 void				ft_ls(t_list *lst, t_list *files, t_flags *flags);
 void				get_mode(int i);
 char				*get_time(time_t i);
+int					check_iflink(char *path);
 
 #endif

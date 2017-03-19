@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 21:23:02 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/18 19:25:20 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/19 21:15:33 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,27 @@ static t_list	*check_ifdir(char *path, t_flags *f, t_list *files)
 	return (files);
 }
 
+t_list			*lnk(char *path, t_data *data, t_list *lst)
+{
+	struct stat		stats;
+	t_list			*tmp;
+
+	if (lstat(path, &stats) < 0)
+		return (lst);
+	data->recpath = path;
+	data->path = path;
+	data->stats = stats;
+	data->file_name = path;
+	data->blocks = stats.st_blocks;
+	if (!(tmp = ft_lstnew(data, sizeof(t_data))))
+		return (NULL);
+	if (!lst)
+		lst = tmp;
+	else
+		ft_lstaddend(&lst, tmp);
+	return (lst);
+}
+
 static t_list	*start_flist(char *path, t_flags *flags, t_list *files)
 {
 	t_data			data;
@@ -61,7 +82,9 @@ static t_list	*start_flist(char *path, t_flags *flags, t_list *files)
 	int				blocks;
 
 	data = (t_data) {NULL, NULL, NULL, 0};
-	if (!(dirp = opendir(path)))
+	if (flags->lflag && check_iflink(path))
+		return (lnk(path, &data, files));
+	else if (!(dirp = opendir(path)))
 		return (check_ifdir(path, flags, files));
 	else
 	{
@@ -74,6 +97,7 @@ t_list			*get_flst(char **argv, t_list *fls, t_flags *flags)
 {
 	int		i;
 	int		check;
+
 	i = 1;
 	while (argv[i])
 	{
