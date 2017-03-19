@@ -37,10 +37,7 @@ static t_list	*check_ifdir(char *path, t_flags *f, t_list *files)
 	t_list			*tmp;
 
 	if (stat(path, &stats) < 0)
-	{
-		ft_error(2, path);
 		return (files);
-	}
 	if (S_ISDIR(stats.st_mode))
 		return (files);
 	data = (t_data) {NULL, NULL, NULL, 0};

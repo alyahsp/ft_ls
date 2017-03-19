@@ -93,12 +93,29 @@ static int	get_blocks(t_list *lst)
 	return (total);
 }
 
+void	lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
+{
+	char			*times;
+	int				nlink;
+
+	while (lst)
+	{
+		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
+		get_mode(((t_data*)lst->content)->stats.st_mode);
+		nlink = ((t_data*)lst->content)->stats.st_nlink;
+		// if (S_ISLNK(((t_data*)lst->content)->stats.st_mode))
+		ft_printf("   %d  %s  %s  %d %s %s\n", nlink, pwd->pw_name, grp->gr_name,
+		((t_data*)lst->content)->stats.st_size, times,
+		((t_data *)(lst->content))->file_name);
+		free(times);
+		lst = lst->next;
+	}
+}
+
 void	print_llst(t_list *lst, t_list *files, int check, int *fst)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
-	char			*times;
-	int				nlink;
 
 	if (lst)
 	{
@@ -113,17 +130,6 @@ void	print_llst(t_list *lst, t_list *files, int check, int *fst)
 			ft_printf("\n%s:\n", ((t_data*)lst->content)->recpath);
 		if (!files || check)
 			ft_printf("total %d\n", get_blocks(lst));
-		while (lst)
-		{
-			times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
-			get_mode(((t_data*)lst->content)->stats.st_mode);
-			nlink = ((t_data*)lst->content)->stats.st_nlink;
-			// if (S_ISLNK(((t_data*)lst->content)->stats.st_mode))
-			ft_printf("   %d  %s  %s  %d %s %s\n", nlink, pwd->pw_name, grp->gr_name,
-			((t_data*)lst->content)->stats.st_size, times,
-			((t_data *)(lst->content))->file_name);
-			free(times);
-			lst = lst->next;
-		}
+		lprinter(lst, pwd, grp);
 	}
 }
