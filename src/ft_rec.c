@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 12:07:56 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 21:52:49 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 16:20:27 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	ft_rec(t_list *lst, t_flags *f)
 	{
 		if (ft_strcmp(".", ((t_data*)lst->content)->file_name)
 		&& ft_strcmp("..", ((t_data*)lst->content)->file_name))
-		if (S_ISDIR(((t_data*)lst->content)->stats.st_mode))
-		{
-			ft_printf("\n%s:\n", ((t_data *)lst->content)->path);
-			ndir = ft_lstnew(start_list(((t_data*)lst->content)->path,
-			f, ndir), sizeof(t_list));
-			ft_ls(ndir, NULL, f);
-			ft_memdel((void **)&ndir);
-		}
+			if (S_ISDIR(((t_data*)lst->content)->stats.st_mode))
+			{
+				ft_printf("\n%s:\n", ((t_data *)lst->content)->path);
+				ndir = ft_lstnew(start_list(((t_data*)lst->content)->path,
+				f, ndir), sizeof(t_list));
+				ft_ls(ndir, NULL, f);
+				ft_memdel((void **)&ndir);
+			}
 		lst = lst->next;
 	}
 }

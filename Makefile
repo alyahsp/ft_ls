@@ -6,7 +6,7 @@
 #    By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/27 17:27:38 by spalmaro          #+#    #+#              #
-#    Updated: 2017/03/19 22:24:19 by spalmaro         ###   ########.fr        #
+#    Updated: 2017/03/20 19:06:16 by spalmaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,10 @@ all: $(NAME)
 
 $(NAME):
 	make $(LIBFT)
-	@$(CC) $(addprefix $(SRC_PATH), $(C_FILES)) $(LIB) -o $(NAME)
+	@$(CC) -g $(addprefix $(SRC_PATH), $(C_FILES)) $(LIB) -o $(NAME)
 
 gcc:
-	@$(CC) $(addprefix $(SRC_PATH), $(C_FILES)) $(LIB) -o $(NAME)
+	@$(CC) -g $(addprefix $(SRC_PATH), $(C_FILES)) $(LIB) -o $(NAME)
 
 clean:
 	make clean $(LIBFT)

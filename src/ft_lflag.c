@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/18 19:17:55 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 23:14:15 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 12:55:13 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	ft_printtype(int i)
 
 void		get_mode(int i)
 {
-	char	*uid;
-	char	*gid;
-	char	*vtx;
+	char		*uid;
+	char		*gid;
+	char		*vtx;
 
 	uid = (i & S_IXUSR) ? "x" : "-";
 	gid = (i & S_IXGRP) ? "x" : "-";
@@ -59,10 +59,10 @@ void		get_mode(int i)
 
 char		*get_time(time_t i)
 {
-	time_t	curtime;
-	char	*mtime;
-	char	*times;
-	char	*tmp;
+	time_t		curtime;
+	char		*mtime;
+	char		*times;
+	char		*tmp;
 
 	time(&curtime);
 	mtime = ctime(&i);
@@ -78,10 +78,10 @@ char		*get_time(time_t i)
 	return (times);
 }
 
-int				get_blocks(t_list *lst)
+int			get_blocks(t_list *lst)
 {
-	int		total;
-	t_list *tmp;
+	int			total;
+	t_list		*tmp;
 
 	total = 0;
 	tmp = lst;
@@ -93,7 +93,7 @@ int				get_blocks(t_list *lst)
 	return (total);
 }
 
-void	print_llst(t_list *lst, t_list *files, int check, int *fst)
+void		print_llst(t_list *lst, t_list *files, int check, int *fst)
 {
 	struct passwd	*pwd;
 	struct group	*grp;

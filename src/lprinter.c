@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/19 22:05:21 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 22:33:22 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 12:48:19 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ static void		print_size(t_list *lst)
 // 	acl_t	tmp;
 // 	char	buf[100];
 //
-// 	if (listxattr(path, buf, sizeof(buf), XATTR_NOFOLLOW) > 0)
+// 	if (listxattr(((t_data*)lst->content)->path, buf,
+// 		sizeof(buf), XATTR_NOFOLLOW) > 0)
 // 		ft_putchar('@');
-// 	else if ((tmp = acl_get_link_np(path, ACL_TYPE_EXTENDED)))
+// 	else if ((tmp = acl_get_link_np(((t_data*)lst->content)->path,
+// 		ACL_TYPE_EXTENDED)))
 // 	{
 // 		acl_free(tmp);
 // 		ft_putchar('+');
@@ -66,7 +68,7 @@ void		lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
 	{
 		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
 		get_mode(((t_data*)lst->content)->stats.st_mode);
-		print_acl(lst);
+		// print_acl(lst);
 		nlink = ((t_data*)lst->content)->stats.st_nlink;
 		ft_printf("  %d %s  %s  ", nlink, pwd->pw_name, grp->gr_name);
 		print_size(lst);

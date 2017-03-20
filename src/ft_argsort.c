@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/11 18:26:41 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 14:59:07 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 17:47:33 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,43 +28,7 @@ static int	sort_revascii(void *a, void *b)
 	return (1);
 }
 
-static int	sort_time(void *a, void *b)
-{
-	if (((t_data *)a)->stats.st_mtimespec.tv_sec <
-	((t_data *)b)->stats.st_mtimespec.tv_sec)
-		return (0);
-	else if (((t_data *)a)->stats.st_mtimespec.tv_sec ==
-	((t_data *)b)->stats.st_mtimespec.tv_sec)
-	{
-		if (((t_data *)a)->stats.st_mtimespec.tv_nsec <
-		((t_data *)b)->stats.st_mtimespec.tv_nsec)
-			return (0);
-		else if (((t_data *)a)->stats.st_mtimespec.tv_nsec ==
-		((t_data *)b)->stats.st_mtimespec.tv_nsec)
-			return (sort_ascii(a, b));
-	}
-	return (1);
-}
-
-static int	sort_revtime(void *a, void *b)
-{
-	if (((t_data *)a)->stats.st_mtimespec.tv_sec >
-	((t_data *)b)->stats.st_mtimespec.tv_sec)
-		return (0);
-	else if (((t_data *)a)->stats.st_mtimespec.tv_sec ==
-	((t_data *)b)->stats.st_mtimespec.tv_sec)
-	{
-		if (((t_data *)a)->stats.st_mtimespec.tv_nsec >
-		((t_data *)b)->stats.st_mtimespec.tv_nsec)
-			return (0);
-		else if (((t_data *)a)->stats.st_mtimespec.tv_nsec ==
-		((t_data *)b)->stats.st_mtimespec.tv_nsec)
-			return (sort_ascii(a, b));
-	}
-	return (1);
-}
-
-t_list	*ft_argsort(t_list *lst, t_flags *f)
+t_list		*ft_argsort(t_list *lst, t_flags *f)
 {
 	if (f->fflag)
 		return (lst);

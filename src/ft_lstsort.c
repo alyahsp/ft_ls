@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/11 18:26:41 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/18 19:58:51 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 17:45:32 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	sort_revascii(void *a, void *b)
 	return (1);
 }
 
-static int	sort_time(void *a, void *b)
+int		sort_time(void *a, void *b)
 {
 	if (((t_data *)a)->stats.st_mtimespec.tv_sec <
 	((t_data *)b)->stats.st_mtimespec.tv_sec)
@@ -44,7 +44,7 @@ static int	sort_time(void *a, void *b)
 	return (1);
 }
 
-static int	sort_revtime(void *a, void *b)
+int		sort_revtime(void *a, void *b)
 {
 	if (((t_data *)a)->stats.st_mtimespec.tv_sec >
 	((t_data *)b)->stats.st_mtimespec.tv_sec)
@@ -62,7 +62,7 @@ static int	sort_revtime(void *a, void *b)
 	return (1);
 }
 
-t_list	*ft_lstsort(t_list *lst, t_flags *f)
+t_list		*ft_lstsort(t_list *lst, t_flags *f)
 {
 	if (f->fflag)
 		return (lst);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   print_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/20 21:58:59 by spalmaro         ###   ########.fr       */
+/*   Created: 2017/03/20 14:58:45 by spalmaro          #+#    #+#             */
+/*   Updated: 2017/03/20 17:39:17 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,34 +90,26 @@ t_list			*start_list(char *path, t_flags *flags, t_list *lst)
 					ft_lstaddend(&lst, tmp);
 			}
 		}
-	(void)closedir(dirp);
+	closedir(dirp);
 	return (lst);
 }
 
-t_list			*get_list(char **argv, t_list *lst, int *check, t_flags *f)
+t_list			*get_list(char **argv, t_list *lst, int argc, t_flags *f)
 {
 	int			i;
-	t_list		*dlst;
-	t_list		*tmp;
+	int			k;
 
 	i = 1;
-	dlst = NULL;
+	k = 1;
 	while (argv[i])
 	{
-		if (argv[i][0] == '-' && argv[i][1] == '-')
-			(*check) = 1;
-		else if ((argv[i][0] != '-') || (*check) == 1)
-		{
-			*check = 1;
-			if ((dlst = start_list(argv[i], f, dlst)))
-			{
-				lst = ft_lstnewadd(lst, dlst);
-				// free(((t_data *)(dlst->content))->path);
-				// free(((t_data *)(dlst->content))->file_name);
-				ft_memdel((void **)&dlst);
-			}
-		}
+		if ((argv[i][0] == '-' && argv[i][1] != '-') && check == 0)
+			k++;
 		i++;
 	}
-	return (ft_argsort(lst, f));
+	while (argv[k])
+	{
+		while ()
+	}
+	return (fls);
 }

@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 23:37:55 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 21:21:22 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ void		print_lst(t_list *lst, t_list *files, int check, int *fst)
 	while (lst)
 	{
 		ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
+		free(((t_data *)(lst->content))->path);
+		free(((t_data *)(lst->content))->file_name);
+		free(lst->content);
 		lst = lst->next;
 	}
+	free(lst);
 }
 
 static int	lst_maxlen(t_list *lst)
@@ -60,23 +64,26 @@ void		print_lstclm(t_list *lst, t_list *files, int check, int *fst)
 	width = ts.ts_cols / maxlen;
 	while (lst)
 	{
-			tmp = width;
-			while (lst && tmp--)
-			{
-				ft_printf("%s", ((t_data *)(lst->content))->file_name);
-				if (tmp)
-					ft_putnchar(' ', (maxlen + 3) -
-					ft_strlen(((t_data *)(lst->content))->file_name));
-				lst = lst->next;
-			}
-			ft_putchar('\n');
+		tmp = width;
+		while (lst && tmp--)
+		{
+			ft_printf("%s", ((t_data *)(lst->content))->file_name);
+			if (tmp)
+				ft_putnchar(' ', (maxlen + 1) -
+				ft_strlen(((t_data *)(lst->content))->file_name));
+			// free(((t_data *)(lst->content))->path);
+			// free(lst->content);
+			lst = lst->next;
+		}
+		ft_putchar('\n');
 	}
+	// free(lst);
 }
 
 void		ft_ls(t_list *lst, t_list *files, t_flags *f)
 {
-	int i;
-	int first;
+	int				i;
+	int				first;
 
 	i = 0;
 	first = 1;
@@ -93,6 +100,8 @@ void		ft_ls(t_list *lst, t_list *files, t_flags *f)
 			print_lstclm(lst->content, files, i, &first);
 		if (f->recflag)
 			ft_rec(lst->content, f);
+		free(lst->content);
 		lst = lst->next;
 	}
+	free(lst);
 }

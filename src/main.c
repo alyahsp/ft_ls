@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:24 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 23:23:53 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 21:54:26 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_error(int i, char *str)
 	}
 }
 
-void		get_flag(char *str, t_flags *flags, int i)
+void	get_flag(char *str, t_flags *flags, int i)
 {
 	while (str[i])
 	{
@@ -64,7 +64,7 @@ void		get_flag(char *str, t_flags *flags, int i)
 
 int		main(int argc, char **argv)
 {
-	int 	check;
+	int		check;
 	t_flags	flags;
 	t_list	*lst;
 	t_list	*fls;
@@ -76,8 +76,13 @@ int		main(int argc, char **argv)
 	fls = get_flst(argv, fls, &flags);
 	lst = get_list(argv, lst, &check, &flags);
 	if (check == 0)
-		lst = ft_lstnew(start_list(".", &flags, lst), sizeof(t_data));
+		lst = ft_lstnew(start_list(".", &flags, lst), sizeof(t_list));
 	(fls) ? ft_fls(fls, &flags) : 0;
 	(lst) ? ft_ls(lst, fls, &flags) : 0;
+	if (lst)
+		free(lst);
+	// if	(fls)
+	// 	free(lst);
+	exit(0);
 	return (0);
 }

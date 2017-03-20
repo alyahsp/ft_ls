@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:20:54 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/19 23:24:18 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 17:46:14 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ void				get_mode(int i);
 char				*get_time(time_t i);
 int					check_iflink(char *path);
 int					get_blocks(t_list *lst);
+int					sort_time(void *a, void *b);
+int					sort_revtime(void *a, void *b);
 
 #endif

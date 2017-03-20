@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 18:25:02 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/11 17:23:39 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/20 13:31:08 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,5 @@ size_t				ft_strlcat(char *dst, const char *src, size_t size);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_sortlst(t_list *lst, int (*cmp)(void*, void*));
+t_list				*ft_lstnewadd(t_list *lst, t_list *dlst);
 #endif
