@@ -51,7 +51,7 @@ void		lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
 		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
 		get_mode(((t_data*)lst->content)->stats.st_mode);
 		nlink = ((t_data*)lst->content)->stats.st_nlink;
-		ft_printf("   %d  %s  %s  ", nlink, pwd->pw_name, grp->gr_name);
+		ft_printf("  %d %s  %s  ", nlink, pwd->pw_name, grp->gr_name);
 		print_size(lst);
 		ft_putstr(times);
 		print_fname(lst);

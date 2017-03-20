@@ -56,6 +56,7 @@ t_list				*get_flst(char **argv, t_list *fls, t_flags *flags);
 t_list				*start_list(char *path, t_flags *flags, t_list *lst);
 t_list				*ft_lstsort(t_list *lst, t_flags *f);
 t_list				*ft_argsort(t_list *lst, t_flags *f);
+void				print_lstclm(t_list *lst, t_list *files, int check, int *fst);
 void				ft_error(int i, char *str);
 void				ft_ls(t_list *lst, t_list *files, t_flags *flags);
 void				get_mode(int i);
