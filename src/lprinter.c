@@ -41,6 +41,22 @@ static void		print_size(t_list *lst)
 		ft_printf("%d ", ((t_data*)lst->content)->stats.st_size);
 }
 
+// static void		print_acl(t_list *lst)
+// {
+// 	acl_t	tmp;
+// 	char	buf[100];
+//
+// 	if (listxattr(path, buf, sizeof(buf), XATTR_NOFOLLOW) > 0)
+// 		ft_putchar('@');
+// 	else if ((tmp = acl_get_link_np(path, ACL_TYPE_EXTENDED)))
+// 	{
+// 		acl_free(tmp);
+// 		ft_putchar('+');
+// 	}
+// 	else
+// 		ft_putchar(' ');
+// }
+
 void		lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
 {
 	char	*times;
@@ -50,6 +66,7 @@ void		lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
 	{
 		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
 		get_mode(((t_data*)lst->content)->stats.st_mode);
+		print_acl(lst);
 		nlink = ((t_data*)lst->content)->stats.st_nlink;
 		ft_printf("  %d %s  %s  ", nlink, pwd->pw_name, grp->gr_name);
 		print_size(lst);
