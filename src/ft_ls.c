@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/20 21:21:22 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/21 16:18:47 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	print_recpath(t_list *lst, t_list *files, int check, int *fst)
 
 void		print_lst(t_list *lst, t_list *files, int check, int *fst)
 {
+	//create temporaire
 	print_recpath(lst, files, check, fst);
 	while (lst)
 	{

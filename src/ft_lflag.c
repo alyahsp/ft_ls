@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/18 19:17:55 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/20 12:55:13 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/21 15:22:41 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void		print_llst(t_list *lst, t_list *files, int check, int *fst)
 		else if (((files && ((t_data*)lst->content)->recpath) || check)
 		&& !S_ISLNK(((t_data*)lst->content)->stats.st_mode))
 			ft_printf("\n%s:\n", ((t_data*)lst->content)->recpath);
-		if ((!files || check)
+		if ((!files || check || (files && *fst))
 		&& !S_ISLNK(((t_data*)lst->content)->stats.st_mode))
 			ft_printf("total %d\n", get_blocks(lst));
 		lprinter(lst, pwd, grp);
