@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/21 16:18:47 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/24 16:13:54 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,19 @@ static void	print_recpath(t_list *lst, t_list *files, int check, int *fst)
 
 void		print_lst(t_list *lst, t_list *files, int check, int *fst)
 {
-	//create temporaire
+	t_list	*tmp;
+
 	print_recpath(lst, files, check, fst);
 	while (lst)
 	{
+		tmp = lst;
 		ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
-		free(((t_data *)(lst->content))->path);
-		free(((t_data *)(lst->content))->file_name);
-		free(lst->content);
+		free(((t_data *)(tmp->content))->path);
+		free(((t_data *)(tmp->content))->file_name);
 		lst = lst->next;
+		free(tmp);
 	}
-	free(lst);
+	ft_memdel((void**)&lst);
 }
 
 static int	lst_maxlen(t_list *lst)

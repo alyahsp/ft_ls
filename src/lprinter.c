@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/19 22:05:21 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/21 15:26:29 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/24 16:20:22 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		print_fname(t_list *lst)
 {
-	char	buf[1000];
+	char			buf[1000];
 
 	if (S_ISLNK(((t_data*)lst->content)->stats.st_mode))
 	{
@@ -29,25 +29,29 @@ static void		print_fname(t_list *lst)
 
 static void		print_size(t_list *lst)
 {
-	int		i;
+	int				i;
 
 	i = ((t_data*)lst->content)->stats.st_mode;
 	if (S_ISCHR(i) || S_ISBLK(i))
 	{
-		ft_printf(" %d", minor(((t_data*)lst->content)->stats.st_rdev));
-		ft_printf(", %d ", major(((t_data*)lst->content)->stats.st_rdev));
+		ft_printf(" %d", major(((t_data*)lst->content)->stats.st_rdev));
+		ft_printf(", %d ", minor(((t_data*)lst->content)->stats.st_rdev));
 	}
 	else
 		ft_printf("%d ", ((t_data*)lst->content)->stats.st_size);
 }
 
-void			lprinter(t_list *lst, struct passwd *pwd, struct group *grp)
+void			lprinter(t_list *lst)
 {
-	char	*times;
-	int		nlink;
+	char			*times;
+	int				nlink;
+	struct passwd	*pwd;
+	struct group	*grp;
 
 	while (lst)
 	{
+		pwd = getpwuid(((t_data*)lst->content)->stats.st_uid);
+		grp = getgrgid(((t_data*)lst->content)->stats.st_gid);
 		times = get_time(((t_data*)lst->content)->stats.st_mtimespec.tv_sec);
 		get_mode(((t_data*)lst->content)->stats.st_mode);
 		nlink = ((t_data*)lst->content)->stats.st_nlink;

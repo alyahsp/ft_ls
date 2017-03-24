@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/18 19:17:55 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/21 15:22:41 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/24 16:16:30 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,8 @@ int			get_blocks(t_list *lst)
 
 void		print_llst(t_list *lst, t_list *files, int check, int *fst)
 {
-	struct passwd	*pwd;
-	struct group	*grp;
-
 	if (lst)
 	{
-		pwd = getpwuid(((t_data*)lst->content)->stats.st_uid);
-		grp = getgrgid(((t_data*)lst->content)->stats.st_gid);
 		if (*fst && !files && check)
 		{
 			ft_printf("%s:\n", ((t_data*)lst->content)->recpath);
@@ -113,6 +108,6 @@ void		print_llst(t_list *lst, t_list *files, int check, int *fst)
 		if ((!files || check || (files && *fst))
 		&& !S_ISLNK(((t_data*)lst->content)->stats.st_mode))
 			ft_printf("total %d\n", get_blocks(lst));
-		lprinter(lst, pwd, grp);
+		lprinter(lst);
 	}
 }

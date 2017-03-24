@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:24:26 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/21 16:17:21 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/24 16:11:28 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,10 @@ t_list			*get_list(char **argv, t_list *lst, int *check, t_flags *f)
 			if ((dlst = start_list(argv[i], f, dlst)))
 			{
 				lst = ft_lstnewadd(lst, dlst);
-				// while (dlst)
-				// {
-				// 	ft_strdel(&((t_data *)(dlst->content))->path);
-				// 	ft_strdel(&((t_data *)(dlst->content))->file_name);
-				// 	dlst = dlst->next;
-				// }
-				// free(((t_data *)(dlst->content))->file_name);
-				// free(((t_data *)(dlst->content))->file_name);
-				free(dlst);
+				ft_memdel((void**)&dlst);
 			}
 		}
 		i++;
 	}
-	free(dlst);
 	return (ft_argsort(lst, f));
 }
