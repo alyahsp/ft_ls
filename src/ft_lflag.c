@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/18 19:17:55 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/24 16:16:30 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/25 14:14:45 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ char		*get_time(time_t i)
 
 	time(&curtime);
 	mtime = ctime(&i);
-	if (i - curtime < 15552000)
+	if (curtime - 5552000 < i)
 		times = ft_strsub(mtime, 4, 12);
 	else
 	{
-		times = ft_strsub(mtime, 4, 7);
+		times = ft_strsub(mtime, 4, 6);
 		tmp = times;
-		times = ft_strjoin(tmp, ft_strsub(mtime, 19, 19));
+		times = ft_strjoin(tmp, ft_strsub(mtime, 19, 5));
 		free(tmp);
 	}
 	return (times);

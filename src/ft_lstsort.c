@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/11 18:26:41 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/21 15:25:19 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/25 13:50:59 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			sort_revtime(void *a, void *b)
 			return (0);
 		else if (((t_data *)a)->stats.st_mtimespec.tv_nsec ==
 		((t_data *)b)->stats.st_mtimespec.tv_nsec)
-			return (sort_ascii(a, b));
+			return (sort_revascii(a, b));
 	}
 	return (1);
 }

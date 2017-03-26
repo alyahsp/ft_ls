@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 21:23:02 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/20 20:20:49 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/24 19:09:01 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_list	*check_ifdir(char *path, t_flags *f, t_list *files)
 	if (S_ISDIR(stats.st_mode))
 		return (files);
 	data = (t_data) {NULL, NULL, NULL, 0};
-	data.file_name = path;
+	data.file_name = ft_strdup(path);
 	data.stats = stats;
 	if (!(tmp = ft_lstnew(&data, sizeof(t_data))))
 		return (NULL);
@@ -64,7 +64,7 @@ t_list			*lnk(char *path, t_data *data, t_list *lst)
 	data->recpath = path;
 	data->path = ft_strdup(path);
 	data->stats = stats;
-	data->file_name = path;
+	data->file_name = ft_strdup(path);
 	data->blocks = stats.st_blocks;
 	if (!(tmp = ft_lstnew(data, sizeof(t_data))))
 		return (NULL);

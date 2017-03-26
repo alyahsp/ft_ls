@@ -6,7 +6,7 @@
 /*   By: spalmaro <spalmaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 15:30:31 by spalmaro          #+#    #+#             */
-/*   Updated: 2017/03/24 16:13:54 by spalmaro         ###   ########.fr       */
+/*   Updated: 2017/03/25 13:38:43 by spalmaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,12 @@ static void	print_recpath(t_list *lst, t_list *files, int check, int *fst)
 
 void		print_lst(t_list *lst, t_list *files, int check, int *fst)
 {
-	t_list	*tmp;
-
 	print_recpath(lst, files, check, fst);
 	while (lst)
 	{
-		tmp = lst;
 		ft_printf("%s\n", ((t_data *)(lst->content))->file_name);
-		free(((t_data *)(tmp->content))->path);
-		free(((t_data *)(tmp->content))->file_name);
 		lst = lst->next;
-		free(tmp);
 	}
-	ft_memdel((void**)&lst);
 }
 
 static int	lst_maxlen(t_list *lst)
@@ -74,13 +67,10 @@ void		print_lstclm(t_list *lst, t_list *files, int check, int *fst)
 			if (tmp)
 				ft_putnchar(' ', (maxlen + 1) -
 				ft_strlen(((t_data *)(lst->content))->file_name));
-			// free(((t_data *)(lst->content))->path);
-			// free(lst->content);
 			lst = lst->next;
 		}
 		ft_putchar('\n');
 	}
-	// free(lst);
 }
 
 void		ft_ls(t_list *lst, t_list *files, t_flags *f)
@@ -103,8 +93,6 @@ void		ft_ls(t_list *lst, t_list *files, t_flags *f)
 			print_lstclm(lst->content, files, i, &first);
 		if (f->recflag)
 			ft_rec(lst->content, f);
-		free(lst->content);
 		lst = lst->next;
 	}
-	free(lst);
 }
